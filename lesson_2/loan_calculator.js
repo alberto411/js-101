@@ -17,4 +17,8 @@ prompt("Welcome to Al's Auto Loans");
 prompt("What's the total loan amount you require for your car purchase?");
 let loanAmount = READLINE.question();
 
-while (invalidNumber())
+while (invalidNumber(loanAmount)) {
+  prompt('Please enter numbers only.');
+  loanAmount = READLINE.question();
+}
+
