@@ -27,57 +27,57 @@ function notYesOrNo(str) {
 
 while (true) {
 
-prompt("Welcome to Al's Auto Loans!");
+  prompt("Welcome to Al's Auto Loans!");
 
-prompt("What's the total loan amount you require for your car purchase?");
-let loanAmount = READLINE.question();
+  prompt("What's the total loan amount you require for your car purchase?");
+  let loanAmount = READLINE.question();
 
-while (invalidNumber(loanAmount)) {
-  prompt('Please enter numbers only.');
-  loanAmount = READLINE.question();
-}
+  while (invalidNumber(loanAmount)) {
+    prompt('Please enter numbers only.');
+    loanAmount = READLINE.question();
+  }
 
-prompt("What's the annual percentage rate (APR) of your auto loan (e.g., enter 6.25% as '6.25')?");
-let loanAPR = READLINE.question();
+  prompt("What's the annual percentage rate (APR) of your auto loan (e.g., enter 6.25% as '6.25')?");
+  let loanAPR = READLINE.question();
 
-while (isDecimalNumber(loanAPR)) {
-  prompt("Please enter the APR as numbers and one decimal point only.")
-  loanAPR = READLINE.question();
-}
+  while (isDecimalNumber(loanAPR)) {
+    prompt("Please enter the APR as numbers and one decimal point only.");
+    loanAPR = READLINE.question();
+  }
 
 
-prompt("What is the duration of your loan in years (e.g., 5)?")
-let loanDurationYears = READLINE.question();
+  prompt("What is the duration of your loan in years (e.g., 5)?");
+  let loanDurationYears = READLINE.question();
 
-while (invalidNumber(loanDurationYears)) {
-  prompt('Please enter numbers only.');
-  loanDurationYears = READLINE.question();
-}
+  while (invalidNumber(loanDurationYears)) {
+    prompt('Please enter numbers only.');
+    loanDurationYears = READLINE.question();
+  }
 
-// Convert APR to monthly interest rate if APR is greater than 0
-if (loanAPR > 0) {
-  let monthlyInterestRate = (loanAPR / 100) / 12;
+  // Convert APR to monthly interest rate if APR is greater than 0
+  if (loanAPR > 0) {
+    let monthlyInterestRate = (loanAPR / 100) / 12;
 
-// Convert loan duration from years to months
-  let loanDurationMonths = loanDurationYears * 12;
+    // Convert loan duration from years to months
+    let loanDurationMonths = loanDurationYears * 12;
 
-  let monthlyPayment = loanAmount * (monthlyInterestRate / (1 - Math.pow((1 + monthlyInterestRate), (-loanDurationMonths))));
-  let roundedMonthlyPayment = monthlyPayment.toFixed(2);
-  let formattedMonthlyPayment = roundedMonthlyPayment.toLocaleString();
+    let monthlyPayment = loanAmount * (monthlyInterestRate /
+      (1 - Math.pow((1 + monthlyInterestRate), (-loanDurationMonths))));
+    let roundedMonthlyPayment = monthlyPayment.toFixed(2);
+    let formattedMonthlyPayment = roundedMonthlyPayment.toLocaleString();
 
-  prompt(`Your monthly loan payment is $${formattedMonthlyPayment}.`);
+    prompt(`Your monthly loan payment is $${formattedMonthlyPayment}.`);
 
   } else { // Omit APR from monthly payment calculation if interest is zero
-  let monthlyInterestRate = (loanAPR / 100) / 12;
-  let monthlyPayment = loanAmount / (loanDurationYears * 12);
-  let roundedMonthlyPayment = monthlyPayment.toFixed(2);
-  let formattedMonthlyPayment = roundedMonthlyPayment.toLocaleString();
-  
-  prompt(`Your interest-free monthly loan payment is $${formattedMonthlyPayment}.`);
-}
+    let monthlyPayment = loanAmount / (loanDurationYears * 12);
+    let roundedMonthlyPayment = monthlyPayment.toFixed(2);
+    let formattedMonthlyPayment = roundedMonthlyPayment.toLocaleString();
 
-// Ask the user if they wish to recalculate the monthly payment
-prompt('Would you like recalculate the monthly payment? (y/n)');
+    prompt(`Your interest-free monthly loan payment is $${formattedMonthlyPayment}.`);
+  }
+
+  // Ask the user if they wish to recalculate the monthly payment
+  prompt('Would you like recalculate the monthly payment? (y/n)');
   let answerYesNo = READLINE.question();
 
   while (notYesOrNo(answerYesNo)) {
