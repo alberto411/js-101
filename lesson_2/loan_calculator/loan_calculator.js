@@ -10,47 +10,49 @@ function prompt(message) {
 }
 
 // Ensure that only numbers are entered
-function invalidNumber(num) {
-  return num.trimStart() === '' || Number.isNaN(Number(num));
+function isValidNumber(num) {
+  return num.trimStart() === '' || Number.isNaN(Number(num)) || num <= 0;
 }
 
 // Ensure that only numbers and one decimal point are entered
 function isDecimalNumber(num) {
   const REGEX = /^[0-9]+([.][0-9]+)?$/;
-  return !REGEX.test(num);
+  return !REGEX.test(num) || num < 0;
 }
 
 // Ensure that only 'y' or 'n' is entered
-function notYesOrNo(str) {
+function recalculatePayment(str) {
   return str.toLowerCase() !== 'y' && str.toLocaleLowerCase() !== 'n';
 }
 
 while (true) {
-
+  
+  console.clear();
   prompt("Welcome to Al's Auto Loans!");
 
   prompt("What's the total loan amount you require for your car purchase?");
   let loanAmount = READLINE.question();
 
-  while (invalidNumber(loanAmount)) {
-    prompt('Please enter numbers only.');
+  while (isValidNumber(loanAmount)) {
+    prompt('Please enter an amount greater than zero.');
     loanAmount = READLINE.question();
   }
 
+  console.clear();
   prompt("What's the annual percentage rate (APR) of your auto loan (e.g., enter 6.25% as '6.25')?");
   let loanAPR = READLINE.question();
 
   while (isDecimalNumber(loanAPR)) {
-    prompt("Please enter the APR as numbers and one decimal point only.");
+    prompt("Please enter the APR as positive numbers and one decimal point only.");
     loanAPR = READLINE.question();
   }
 
-
+  console.clear();
   prompt("What is the duration of your loan in years (e.g., 5)?");
   let loanDurationYears = READLINE.question();
 
-  while (invalidNumber(loanDurationYears)) {
-    prompt('Please enter numbers only.');
+  while (isValidNumber(loanDurationYears)) {
+    prompt('Please enter a number greater than zero.');
     loanDurationYears = READLINE.question();
   }
 
@@ -65,7 +67,8 @@ while (true) {
       (1 - Math.pow((1 + monthlyInterestRate), (-loanDurationMonths))));
     let roundedMonthlyPayment = monthlyPayment.toFixed(2);
     let formattedMonthlyPayment = roundedMonthlyPayment.toLocaleString();
-
+    
+    console.clear();
     prompt(`Your monthly loan payment is $${formattedMonthlyPayment}.`);
 
   } else { // Omit APR from monthly payment calculation if interest is zero
@@ -77,10 +80,10 @@ while (true) {
   }
 
   // Ask the user if they wish to recalculate the monthly payment
-  prompt('Would you like recalculate the monthly payment? (y/n)');
+  prompt('Would you like to recalculate the monthly payment? (y/n)');
   let answerYesNo = READLINE.question();
 
-  while (notYesOrNo(answerYesNo)) {
+  while (recalculatePayment(answerYesNo)) {
     prompt('Please enter y or n.');
     answerYesNo = READLINE.question();
   }
